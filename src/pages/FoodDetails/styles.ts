@@ -171,3 +171,28 @@ export const IconContainer = styled.View`
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 `;
+
+export const ConfirmationContainer = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  flex: 1;
+  height: 100%;
+  background: black;
+  opacity: 0.9;
+
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ConfirmationContainerText = styled.Text`
+  font-family: 'Poppins';
+
+  margin-top: 16px;
+  font-size: 28px;
+  color: #fff;
+
+  font-weight: bold;
+`;

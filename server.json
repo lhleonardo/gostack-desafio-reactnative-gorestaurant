@@ -32,7 +32,7 @@
       "extras": [
         {
           "id": 3,
-          "name": "Bacon",
+          "name": "Gorgonzola",
           "value": 1.5
         }
       ]
@@ -48,7 +48,7 @@
       "extras": [
         {
           "id": 4,
-          "name": "Bacon",
+          "name": "Ostra",
           "value": 1.5
         }
       ]
@@ -88,17 +88,24 @@
           "quantity": 1
         }
       ]
-    }
-  ],
-  "favorites": [
+    },
     {
-      "id": 2,
+      "product_id": 2,
       "name": "Veggie",
       "description": "Macarrão com pimentão, ervilha e ervas finas colhidas no himalaia.",
       "price": "21.90",
       "category": 2,
-      "image_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-food/food2.png",
-      "thumbnail_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-gorestaurant-mobile/veggie.png"
+      "thumbnail_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-gorestaurant-mobile/veggie.png",
+      "extras": [
+        {
+          "id": 3,
+          "name": "Gorgonzola",
+          "value": 1.5,
+          "quantity": 1
+        }
+      ],
+      "id": 2
     }
-  ]
+  ],
+  "favorites": []
 }
