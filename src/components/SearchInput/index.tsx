@@ -6,21 +6,35 @@ import { Container, TextInput, Icon } from './styles';
 
 interface InputProps extends TextInputProps {
   name?: string;
+
+  onFocusEnter(): void;
+  onFocusExit(): void;
 }
 
-const SearchInput: React.FC<InputProps> = ({ value = '', ...rest }) => {
+const SearchInput: React.FC<InputProps> = ({
+  value = '',
+  onFocusEnter,
+  onFocusExit,
+  ...rest
+}) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
   const handleInputFocus = useCallback(() => {
     setIsFocused(true);
-  }, []);
+
+    if (onFocusEnter) {
+      onFocusEnter();
+    }
+  }, [onFocusEnter]);
 
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
 
     setIsFilled(!!value);
-  }, [value]);
+
+    onFocusExit();
+  }, [value, onFocusExit]);
 
   return (
     <Container isFocused={isFocused}>

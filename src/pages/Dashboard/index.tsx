@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Image, ScrollView } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
@@ -49,17 +49,32 @@ const Dashboard: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<
     number | undefined
   >();
+
+  const [typing, setTyping] = useState(false);
+
   const [searchValue, setSearchValue] = useState('');
 
   const navigation = useNavigation();
 
-  async function handleNavigate(id: number): Promise<void> {
-    // Navigate do ProductDetails page
-  }
-
   useEffect(() => {
     async function loadFoods(): Promise<void> {
-      // Load Foods from API
+      const response = await api.get<Food[]>('/foods', {
+        params: {
+          category_like: selectedCategory,
+          name_like: searchValue,
+        },
+      });
+
+      const formattedFoods = response.data.map(food => {
+        const formattedPrice = formatValue(food.price);
+
+        return {
+          ...food,
+          formattedPrice,
+        };
+      });
+
+      setFoods(formattedFoods);
     }
 
     loadFoods();
@@ -68,18 +83,35 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     async function loadCategories(): Promise<void> {
       // Load categories from API
+      const response = await api.get<Category[]>('/categories');
+
+      setCategories(response.data);
     }
 
     loadCategories();
   }, []);
 
-  function handleSelectCategory(id: number): void {
-    // Select / deselect category
-  }
+  const handleSelectCategory = useCallback(
+    (id: number) => {
+      // Select / deselect category
+      if (selectedCategory && selectedCategory === id) {
+        setSelectedCategory(undefined);
+      } else {
+        setSelectedCategory(id);
+      }
+    },
+    [selectedCategory],
+  );
 
+  const handleNavigate = useCallback(
+    async (id: number) => {
+      navigation.navigate('FoodDetails', { foodId: id });
+    },
+    [navigation],
+  );
   return (
     <Container>
-      <Header>
+      <Header typing={typing}>
         <Image source={Logo} />
         <Icon
           name="log-out"
@@ -93,10 +125,12 @@ const Dashboard: React.FC = () => {
           value={searchValue}
           onChangeText={setSearchValue}
           placeholder="Qual comida você procura?"
+          onFocusEnter={() => setTyping(true)}
+          onFocusExit={() => setTyping(false)}
         />
       </FilterContainer>
       <ScrollView>
-        <CategoryContainer>
+        <CategoryContainer typing={typing}>
           <Title>Categorias</Title>
           <CategorySlider
             contentContainerStyle={{
@@ -122,7 +156,7 @@ const Dashboard: React.FC = () => {
             ))}
           </CategorySlider>
         </CategoryContainer>
-        <FoodsContainer>
+        <FoodsContainer typing={typing}>
           <Title>Pratos</Title>
           <FoodList>
             {foods.map(food => (

@@ -1,21 +1,30 @@
 import styled, { css } from 'styled-components/native';
 
+interface TypingProps {
+  typing?: boolean;
+}
+
 interface CategoryItemProps {
   isSelected?: boolean;
 }
+
+const opacityWhenTyping = css`
+  opacity: 0.6;
+`;
 
 export const Container = styled.View`
   flex: 1;
   background: #fff;
 `;
 
-export const Header = styled.View`
+export const Header = styled.View<TypingProps>`
   padding: 60px 24px 60px;
   background: #c72828;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  ${props => props.typing && opacityWhenTyping}
 `;
 
 export const FilterContainer = styled.View`
@@ -33,8 +42,9 @@ export const Title = styled.Text`
   padding: 0 20px;
 `;
 
-export const CategoryContainer = styled.View`
+export const CategoryContainer = styled.View<TypingProps>`
   margin-top: 40px;
+  ${props => props.typing && opacityWhenTyping}
 `;
 
 export const CategorySlider = styled.ScrollView`
@@ -71,8 +81,10 @@ export const CategoryItemTitle = styled.Text`
   color: #6c6c80;
 `;
 
-export const FoodsContainer = styled.View`
+export const FoodsContainer = styled.View<TypingProps>`
   margin-top: 40px;
+
+  ${props => props.typing && opacityWhenTyping}
 `;
 
 export const FoodList = styled.View`
