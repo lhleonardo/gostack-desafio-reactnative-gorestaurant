@@ -66,7 +66,7 @@ const Dashboard: React.FC = () => {
       });
 
       const formattedFoods = response.data.map(food => {
-        const formattedPrice = formatValue(food.price);
+        const formattedPrice = formatValue(Number(food.price));
 
         return {
           ...food,
@@ -105,7 +105,7 @@ const Dashboard: React.FC = () => {
 
   const handleNavigate = useCallback(
     async (id: number) => {
-      navigation.navigate('FoodDetails', { foodId: id });
+      navigation.navigate('FoodDetails', { id });
     },
     [navigation],
   );
